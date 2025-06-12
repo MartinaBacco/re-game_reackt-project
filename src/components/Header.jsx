@@ -65,12 +65,12 @@ export default function Header() {
         ) : (
           <ul>
             <li>
-              <Link to="/login" className="btn">
+              <Link to="/login" className="btn btn-outline btn-primary">
                 Login
               </Link>
             </li>
             <li>
-              <Link to="/register" className="btn">
+              <Link to="/register" className="btn btn-primary">
                 Register
               </Link>
             </li>

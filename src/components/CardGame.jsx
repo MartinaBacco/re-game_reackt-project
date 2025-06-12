@@ -8,7 +8,7 @@ export default function CardGame({ game }) {
 
   return (
 
-    <div className="card bg-base-100 w-96 shadow-sm" key={game.id}>
+    <div className="card bg-base-100 shadow-sm" key={game.id}>
       { <LazyLoadImage image={image} /> }
       <div className="card-body">
         <h2 className="card-title">

@@ -8,7 +8,6 @@ export default function Layout() {
     return (
         <div className="style-layout-system">
             <Header />
-            <Searchbar />
             <GenresDropdown />
             <div className="style-main-content">
                 <Outlet />
