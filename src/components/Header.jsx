@@ -1,22 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
 import Searchbar from "./Searchbar";
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import supabase from "../supabase/supabase-client";
+import SessionContext from "../context/SessionContext";
 
 export default function Header() {
   const navigate = useNavigate();
-  const [session, setSession] = useState(null);
-
-  const getSession = async () => {
-    const { data, error } = await supabase.auth.getSession();
-    if (error) {
-        console.error("Error getting session:", error);
-        setSession(null);
-    } else { 
-        console.log("Current session:", data.session);
-        setSession(data.session);
-    }
-  };
+  const { session } = useContext(SessionContext);
 
   const handleLogout = async () => {
     const { error } = await supabase.auth.signOut();
@@ -25,32 +15,13 @@ export default function Header() {
             console.error("Logout error:", error);
         } else {
             alert("Logged out 👍🏻!");
-            setSession(null);
-            navigate("/");
         }
   };
-
-  useEffect(() => {
-    getSession();
-
-    const { data: authListener } = supabase.auth.onAuthStateChange(
-      (event, session) => {
-        console.log("Auth event:", event, "Session:", session);
-        setSession(session);
-      }
-    );
-
-    return () => {
-      if (authListener && authListener.subscription) {
-                authListener.subscription.unsubscribe();
-            }
-        };
-    }, []);
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
       <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">Rehack-ame</Link>
+        <Link to="/" className="btn btn-ghost text-xl">Re-Game</Link>
       </div>
       <div className="flex gap-2">
         <Searchbar />
@@ -75,13 +46,14 @@ export default function Header() {
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
             >
               <li>
-                <a className="justify-between">
+                <Link to="/profile" className="btn">
                   Profile
-                  <span className="badge">New</span>
-                </a>
+                </Link>
               </li>
               <li>
-                <a className="btn">Settings</a>
+                <Link to="/account" className="btn">
+                  Settings
+                </Link>
               </li>
               <li>
                 <a className="btn" onClick={handleLogout}>

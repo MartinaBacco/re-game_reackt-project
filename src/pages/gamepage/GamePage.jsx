@@ -35,6 +35,10 @@ export default function GamePage() {
         </div>
       </div>
       )}
+
+      <div className="style-chatbox">
+        <Chatbox data={data && data} />
+      </div>
     </>
   );
 }
