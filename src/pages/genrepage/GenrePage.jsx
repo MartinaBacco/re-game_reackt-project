@@ -6,14 +6,13 @@ import useFetchSolution from "../../hook/useFetchSolution";
 export default function GenrePage() {
     const { genre } = useParams();
 
-    const initialUrl =`https://api.rawg.io/api/games?key=bd5e564bfd3948ae8d943cbd4c2abd50=${genre}&page=1`
+    const initialUrl = `https://api.rawg.io/api/games?key=bd5e564bfd3948ae8d943cbd4c2abd50&genres=${genre}&page=1`;
 
     const { data, loading, error, updateUrl } = useFetchSolution(initialUrl);
 
     useEffect(() => {
 
-    const newUrl =
-      `https://api.rawg.io/api/games/${genre}?key=bd5e564bfd3948ae8d943cbd4c2abd50`;
+    const newUrl = `https://api.rawg.io/api/games?key=bd5e564bfd3948ae8d943cbd4c2abd50&genres=${genre}&page=1`;
         updateUrl(newUrl);
     }, [genre, updateUrl]);
 
@@ -38,14 +37,5 @@ export default function GenrePage() {
                 ))}
             </div>
         </div>
-    );
-    return (
-        <>
-            <h2>Welcome to {genre} page</h2>
-            <div className="grid-games-list">
-                {fetchError && <article>{fetchError}</article>}
-                {data && data.results.map((game) => <CardGame key={game.id} game={game} />)}
-            </div>
-        </>
     );
 }

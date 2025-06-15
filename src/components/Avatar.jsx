@@ -50,26 +50,39 @@ export default function Avatar({ url, size, onUpload }) {
   }
 
   return (
-    <div>
+    <div className="flex flex-col items-center gap-4">
       {avatarUrl ? (
         <img
           src={avatarUrl}
           alt="Avatar"
-          className="avatar image"
-          style={{ height: size, width: size, boxShadow: "3px 3px 8px black" }}
+          className="rounded-full object-cover shadow-lg"
+          style={{ height: size, width: size }}
         />
       ) : (
-        <div className="avatar no-image" style={{ height: size, width: size }} />
+        <div
+          className="rounded-full bg-base-200 flex items-center justify-center text-gray-500"
+          style={{ height: size, width: size }}
+        >
+          No Image
+        </div>
       )}
-      <div style={{ width: size }}>
+
+      <label className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">Scegli una nuova foto</span>
+        </div>
         <input
           type="file"
-          id="single"
           accept="image/*"
           onChange={uploadAvatar}
           disabled={uploading}
+          className="file-input file-input-bordered file-input-primary w-full"
         />
-      </div>
+      </label>
+
+      {uploading && (
+        <span className="loading loading-spinner loading-md text-primary"></span>
+      )}
     </div>
-  )
+  );
 }
